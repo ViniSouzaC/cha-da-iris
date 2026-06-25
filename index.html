@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Chá de bebê da Íris</title>
+<meta name="description" content="Venha celebrar a chegada da Íris com a gente!" />
+
+<!-- Fontes (gratuitas, Google Fonts) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+  /* ============================================================
+     PALETA E TOKENS
+     ============================================================ */
+  :root{
+    --cream:      #FBF6F2;
+    --cream-deep: #F5EBE4;
+    --iris:       #9B7EC4;   /* lilás-íris (cor principal) */
+    --iris-soft:  #C6B0E0;
+    --blush:      #F2C9CE;
+    --peach:      #F8D9BE;
+    --sage:       #BFD8C2;
+    --sky:        #C5DCEC;
+    --ink:        #4A4458;   /* texto (ameixa-acinzentado suave) */
+    --ink-soft:   #6F6880;
+
+    --radius:     22px;
+    --shadow:     0 18px 50px -22px rgba(74, 68, 88, .35);
+    --shadow-sm:  0 8px 24px -14px rgba(74, 68, 88, .35);
+    --maxw:       780px;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin: 0;
+    font-family: "Quicksand", system-ui, sans-serif;
+    color: var(--ink);
+    background:
+      radial-gradient(1200px 600px at 12% -8%, rgba(198,176,224,.30), transparent 60%),
+      radial-gradient(900px 600px at 100% 0%, rgba(242,201,206,.28), transparent 55%),
+      radial-gradient(800px 700px at 50% 120%, rgba(191,216,194,.25), transparent 60%),
+      var(--cream);
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  .wrap{
+    width: 100%;
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 22px;
+  }
+
+  /* ============================================================
+     CAPA
+     ============================================================ */
+  .hero{
+    position: relative;
+    text-align: center;
+    padding: clamp(70px, 14vh, 130px) 0 clamp(60px, 10vh, 100px);
+    overflow: hidden;
+  }
+
+  .eyebrow{
+    display: inline-block;
+    font-weight: 600;
+    letter-spacing: .42em;
+    text-transform: uppercase;
+    font-size: .72rem;
+    color: var(--iris);
+    margin-bottom: 18px;
+    padding-left: .42em;
+  }
+
+  .hero h1{
+    font-family: "Fraunces", serif;
+    font-weight: 500;
+    font-size: clamp(4.6rem, 22vw, 9rem);
+    line-height: .92;
+    margin: 0;
+    color: var(--ink);
+    letter-spacing: -.01em;
+  }
+
+  .hero .lead{
+    max-width: 30ch;
+    margin: 26px auto 0;
+    font-size: clamp(1rem, 2.4vw, 1.18rem);
+    color: var(--ink-soft);
+  }
+
+  .date-chip{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 34px;
+    padding: 11px 22px;
+    background: rgba(255,255,255,.7);
+    border: 1px solid rgba(155,126,196,.25);
+    border-radius: 999px;
+    font-weight: 600;
+    color: var(--iris);
+    box-shadow: var(--shadow-sm);
+    backdrop-filter: blur(6px);
+  }
+  .date-chip svg{ width: 17px; height: 17px; }
+
+  /* Borboletas flutuantes (elemento-assinatura) */
+  .butterflies{
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .butterflies .bf{
+    position: absolute;
+    opacity: .9;
+    animation: drift 14s ease-in-out infinite;
+    transform-origin: center;
+  }
+  .butterflies .bf .wing{ animation: flutter 2.6s ease-in-out infinite; transform-origin: center; }
+  .bf.b1{ left: 8%;  top: 14%; width: 54px; animation-delay: 0s;   opacity:.85;}
+  .bf.b2{ left: 82%; top: 20%; width: 40px; animation-delay: -3s;  opacity:.7;}
+  .bf.b3{ left: 18%; top: 62%; width: 34px; animation-delay: -6s;  opacity:.65;}
+  .bf.b4{ left: 74%; top: 64%; width: 46px; animation-delay: -2s;  opacity:.8;}
+  .bf.b5{ left: 46%; top: 8%;  width: 30px; animation-delay: -9s;  opacity:.55;}
+
+  @keyframes drift{
+    0%,100%{ transform: translate(0,0) rotate(-4deg); }
+    25%    { transform: translate(14px,-22px) rotate(5deg); }
+    50%    { transform: translate(-10px,-10px) rotate(-2deg); }
+    75%    { transform: translate(10px,16px) rotate(6deg); }
+  }
+  @keyframes flutter{
+    0%,100%{ transform: scaleX(1); }
+    50%    { transform: scaleX(.62); }
+  }
+
+  /* ============================================================
+     SEÇÕES
+     ============================================================ */
+  section.block{ padding: clamp(50px, 9vh, 90px) 0; position: relative; }
+
+  .sec-eyebrow{
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    font-size: .72rem;
+    color: var(--iris);
+    margin: 0 0 8px;
+  }
+  .sec-title{
+    text-align: center;
+    font-family: "Fraunces", serif;
+    font-weight: 500;
+    font-size: clamp(2rem, 6vw, 2.8rem);
+    margin: 0 0 38px;
+    color: var(--ink);
+  }
+
+  /* Cartões de detalhes */
+  .details{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .card{
+    background: rgba(255,255,255,.78);
+    border: 1px solid rgba(155,126,196,.16);
+    border-radius: var(--radius);
+    padding: 28px 22px;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+  }
+  .card .ic{
+    width: 48px; height: 48px;
+    margin: 0 auto 14px;
+    display: grid; place-items: center;
+    border-radius: 14px;
+    background: var(--cream-deep);
+    color: var(--iris);
+  }
+  .card .ic svg{ width: 24px; height: 24px; }
+  .card .label{
+    font-size: .72rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--ink-soft); font-weight: 600; margin-bottom: 6px;
+  }
+  .card .value{ font-size: 1.18rem; font-weight: 600; color: var(--ink); }
+  .card .value.small{ font-size: 1rem; }
+  .card a.mini{
+    display: inline-block;
+    margin-top: 12px;
+    font-size: .82rem;
+    font-weight: 600;
+    color: var(--iris);
+    text-decoration: none;
+    border-bottom: 1.5px solid var(--iris-soft);
+    padding-bottom: 1px;
+  }
+  .card a.mini:hover{ color: var(--ink); border-color: var(--ink); }
+
+  /* ============================================================
+     RSVP
+     ============================================================ */
+  .rsvp-panel{
+    background: rgba(255,255,255,.82);
+    border: 1px solid rgba(155,126,196,.16);
+    border-radius: calc(var(--radius) + 6px);
+    padding: clamp(28px, 5vw, 46px);
+    box-shadow: var(--shadow);
+  }
+  .rsvp-intro{ text-align: center; color: var(--ink-soft); max-width: 44ch; margin: -16px auto 30px; }
+
+  .field{ margin-bottom: 20px; }
+  .field > label{
+    display: block;
+    font-weight: 600;
+    font-size: .92rem;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .field input[type="text"],
+  .field input[type="number"],
+  .field textarea{
+    width: 100%;
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--ink);
+    background: var(--cream);
+    border: 1.5px solid rgba(155,126,196,.25);
+    border-radius: 14px;
+    padding: 13px 15px;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .field input:focus,
+  .field textarea:focus{
+    outline: none;
+    border-color: var(--iris);
+    box-shadow: 0 0 0 3px rgba(155,126,196,.18);
+  }
+  .field textarea{ resize: vertical; min-height: 84px; }
+
+  /* Toggle Sim / Não */
+  .choice{ display: flex; gap: 12px; }
+  .choice label{
+    flex: 1;
+    position: relative;
+    cursor: pointer;
+  }
+  .choice input{ position: absolute; opacity: 0; pointer-events: none; }
+  .choice span{
+    display: block;
+    text-align: center;
+    padding: 13px 10px;
+    border-radius: 14px;
+    border: 1.5px solid rgba(155,126,196,.25);
+    background: var(--cream);
+    font-weight: 600;
+    color: var(--ink-soft);
+    transition: all .15s;
+  }
+  .choice input:checked + span{
+    background: var(--iris);
+    border-color: var(--iris);
+    color: #fff;
+    box-shadow: var(--shadow-sm);
+  }
+  .choice input:focus-visible + span{
+    box-shadow: 0 0 0 3px rgba(155,126,196,.35);
+  }
+
+  .btn-confirm{
+    width: 100%;
+    margin-top: 8px;
+    font-family: inherit;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, var(--iris), #B58FD6);
+    border: none;
+    border-radius: 16px;
+    padding: 16px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: var(--shadow);
+    transition: transform .12s, filter .15s;
+  }
+  .btn-confirm:hover{ filter: brightness(1.05); transform: translateY(-1px); }
+  .btn-confirm:active{ transform: translateY(0); }
+  .btn-confirm svg{ width: 20px; height: 20px; }
+
+  .form-note{
+    text-align: center;
+    font-size: .82rem;
+    color: var(--ink-soft);
+    margin: 14px 2px 0;
+  }
+  .error{ color: #c0566a; font-size: .82rem; margin-top: 6px; display: none; }
+  .error.show{ display: block; }
+
+  /* Formulário do Google embutido */
+  #formFrame{
+    width: 100%;
+    min-height: 1005px;
+    border: none;
+    border-radius: 16px;
+    background: #fff;
+    display: block;
+  }
+  .config-msg{
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: .9rem;
+    background: var(--cream);
+    border: 1px dashed rgba(155,126,196,.45);
+    border-radius: 14px;
+    padding: 22px 18px;
+    margin: 0;
+  }
+
+  /* ============================================================
+     RODAPÉ
+     ============================================================ */
+  footer{
+    text-align: center;
+    padding: 50px 0 60px;
+    color: var(--ink-soft);
+    font-size: .9rem;
+  }
+  footer .heart{ color: var(--blush); }
+  footer .sig{
+    font-family: "Fraunces", serif;
+    font-size: 1.4rem;
+    color: var(--iris);
+    display: block;
+    margin-top: 6px;
+  }
+
+  /* ============================================================
+     RESPONSIVO
+     ============================================================ */
+  @media (max-width: 620px){
+    .details{ grid-template-columns: 1fr; }
+    .bf.b2, .bf.b4{ display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    .butterflies .bf,
+    .butterflies .bf .wing{ animation: none; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ===================== CAPA ===================== -->
+  <header class="hero">
+    <div class="butterflies" aria-hidden="true">
+      <svg class="bf b1" viewBox="0 0 100 90"><use href="#butterfly"/></svg>
+      <svg class="bf b2" viewBox="0 0 100 90"><use href="#butterfly"/></svg>
+      <svg class="bf b3" viewBox="0 0 100 90"><use href="#butterfly"/></svg>
+      <svg class="bf b4" viewBox="0 0 100 90"><use href="#butterfly"/></svg>
+      <svg class="bf b5" viewBox="0 0 100 90"><use href="#butterfly"/></svg>
+    </div>
+
+    <div class="wrap" style="position:relative; z-index:1;">
+      <span class="eyebrow">Chá de bebê</span>
+      <h1>Íris</h1>
+      <p class="lead">Nossa borboletinha está chegando — e queremos celebrar esse momento com você.</p>
+      <span class="date-chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        <span id="chipDate">—</span>
+      </span>
+    </div>
+  </header>
+
+  <!-- ===================== QUANDO & ONDE ===================== -->
+  <section class="block">
+    <div class="wrap">
+      <p class="sec-eyebrow">Os detalhes</p>
+      <h2 class="sec-title">Quando &amp; onde</h2>
+
+      <div class="details">
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+          <div class="label">Data</div>
+          <div class="value" id="cardDate">—</div>
+          <a class="mini" id="calLink" href="#" target="_blank" rel="noopener">Adicionar à agenda</a>
+        </div>
+
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <div class="label">Horário</div>
+          <div class="value" id="cardTime">—</div>
+        </div>
+
+        <div class="card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div class="label">Local</div>
+          <div class="value small" id="cardVenue">—</div>
+          <a class="mini" id="mapLink" href="#" target="_blank" rel="noopener">Ver no mapa</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== LISTA DE PRESENÇA ===================== -->
+  <section class="block">
+    <div class="wrap">
+      <p class="sec-eyebrow">Conta pra gente</p>
+      <h2 class="sec-title">Confirmar presença</h2>
+      <p class="rsvp-intro">É só preencher o formulário abaixo — sua confirmação chega direto pra gente.</p>
+
+      <div class="rsvp-panel">
+        <!-- Formulário do Google (embutido) -->
+        <div id="formWrap">
+          <iframe id="formFrame" title="Formulário de confirmação de presença" loading="lazy"></iframe>
+        </div>
+        <p class="config-msg" id="formMsg" hidden>
+          O formulário ainda não foi conectado. Cole o link do Google Forms no bloco <b>CONFIG</b> do código.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Feito com <span class="heart">♥</span> à espera da nossa borboletinha</p>
+    <span class="sig">Íris</span>
+  </footer>
+
+  <!-- Definição da borboleta (SVG reutilizável) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <linearGradient id="wingGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#C6B0E0"/>
+        <stop offset="55%" stop-color="#F2C9CE"/>
+        <stop offset="100%" stop-color="#F8D9BE"/>
+      </linearGradient>
+      <g id="butterfly">
+        <g class="wing" fill="url(#wingGrad)" stroke="#9B7EC4" stroke-width="1.4" stroke-opacity=".5">
+          <path d="M50 45 C 30 10, 2 14, 8 36 C 12 52, 38 50, 50 45 Z"/>
+          <path d="M50 45 C 70 10, 98 14, 92 36 C 88 52, 62 50, 50 45 Z"/>
+          <path d="M50 46 C 34 58, 14 60, 18 76 C 22 88, 44 74, 50 60 Z"/>
+          <path d="M50 46 C 66 58, 86 60, 82 76 C 78 88, 56 74, 50 60 Z"/>
+        </g>
+        <rect x="48.6" y="30" width="2.8" height="40" rx="1.4" fill="#6F6880"/>
+        <circle cx="50" cy="30" r="3" fill="#6F6880"/>
+        <path d="M50 29 C 47 22, 43 20, 41 18" stroke="#6F6880" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+        <path d="M50 29 C 53 22, 57 20, 59 18" stroke="#6F6880" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+      </g>
+    </defs>
+  </svg>
+
+<script>
+/* ════════════════════════════════════════════════════════════════
+   ✏️  EDITE AQUI — é o único lugar que você precisa mexer
+   ════════════════════════════════════════════════════════════════ */
+const CONFIG = {
+  // Nome do bebê (aparece na capa e no rodapé)
+  babyName: "Íris",
+
+  // DATA do evento — formato AAAA-MM-DD
+  dateISO: "2026-08-15",
+
+  // Horário (formato 24h "HH:MM")
+  startTime: "15:00",
+  endTime:   "18:00",
+
+  // Local
+  venueName:    "Salão de festas — Edifício Primavera",
+  venueAddress: "Rua das Flores, 123 — São Bernardo do Campo, SP",
+
+  // ---- LISTA DE PRESENÇA (Google Forms) ----
+  // Link de INCORPORAÇÃO do formulário.
+  // No Google Forms: Enviar > ícone < > > copie só o endereço do src
+  // (começa com https://docs.google.com/forms/.../viewform?embedded=true)
+  formEmbedUrl: "https://docs.google.com/forms/d/e/1FAIpQLScSJ0dftHlBTVWA9L4ggNkJ4UVpMOPqwGrREPPedY4xyhp7hA/viewform?embedded=true",
+};
+/* ════════════════════════════════════════════════════════════════
+   Daqui pra baixo não precisa mexer 🙂
+   ════════════════════════════════════════════════════════════════ */
+
+(function () {
+  const meses = ["janeiro","fevereiro","março","abril","maio","junho",
+                 "julho","agosto","setembro","outubro","novembro","dezembro"];
+  const semana = ["domingo","segunda-feira","terça-feira","quarta-feira",
+                  "quinta-feira","sexta-feira","sábado"];
+
+  // Monta a data sem problemas de fuso (interpreta como local)
+  const [y, m, d] = CONFIG.dateISO.split("-").map(Number);
+  const dt = new Date(y, m - 1, d);
+
+  const diaSemana = semana[dt.getDay()];
+  const dataLonga = `${d} de ${meses[m - 1]} de ${y}`;
+  const dataCurta = `${diaSemana}, ${d} de ${meses[m - 1]}`;
+
+  // Preenche os textos
+  document.getElementById("chipDate").textContent = dataCurta;
+  document.getElementById("cardDate").innerHTML = `${dataLonga}<br><span style="font-weight:400;color:var(--ink-soft);font-size:.9rem">${diaSemana}</span>`;
+  document.getElementById("cardTime").textContent = `${CONFIG.startTime} às ${CONFIG.endTime}`;
+  document.getElementById("cardVenue").innerHTML = `${CONFIG.venueName}<br><span style="font-weight:400;color:var(--ink-soft);font-size:.85rem">${CONFIG.venueAddress}</span>`;
+
+  // Link "Ver no mapa"
+  document.getElementById("mapLink").href =
+    "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(CONFIG.venueAddress);
+
+  // Link "Adicionar à agenda" (Google Calendar)
+  const pad = n => String(n).padStart(2, "0");
+  const [sh, sm] = CONFIG.startTime.split(":").map(Number);
+  const [eh, em] = CONFIG.endTime.split(":").map(Number);
+  const stamp = (hh, mm) => `${y}${pad(m)}${pad(d)}T${pad(hh)}${pad(mm)}00`;
+  const calUrl = new URL("https://calendar.google.com/calendar/render");
+  calUrl.searchParams.set("action", "TEMPLATE");
+  calUrl.searchParams.set("text", `Chá de bebê da ${CONFIG.babyName}`);
+  calUrl.searchParams.set("dates", `${stamp(sh, sm)}/${stamp(eh, em)}`);
+  calUrl.searchParams.set("location", `${CONFIG.venueName}, ${CONFIG.venueAddress}`);
+  calUrl.searchParams.set("details", `Venha celebrar a chegada da ${CONFIG.babyName}! 🦋`);
+  document.getElementById("calLink").href = calUrl.toString();
+
+  // ---- LISTA DE PRESENÇA (Google Forms embutido) ----
+  const notSet = v => !v || v.indexOf("COLE_AQUI") === 0;
+  const formFrame = document.getElementById("formFrame");
+  const formMsg   = document.getElementById("formMsg");
+  if (notSet(CONFIG.formEmbedUrl)) {
+    formFrame.hidden = true;
+    formMsg.hidden = false;
+  } else {
+    formFrame.src = CONFIG.formEmbedUrl;
+  }
+
+  // Título da aba
+  document.title = `Chá de bebê da ${CONFIG.babyName}`;
+})();
+</script>
+</body>
+</html>
